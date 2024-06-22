@@ -1,0 +1,120 @@
+[gd_scene load_steps=5 format=3 uid="uid://xwpkxce3rcb"]
+
+[ext_resource type="PackedScene" uid="uid://cd7hw6p8q4awu" path="res://scenes/player.tscn" id="1_f2vpt"]
+[ext_resource type="Texture2D" uid="uid://bl4qx5bohqcle" path="res://assets/white_sq.png" id="2_ufpbl"]
+[ext_resource type="PackedScene" uid="uid://8y8i7312ixnx" path="res://scenes/zombie.tscn" id="3_qgdn1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcpif"]
+size = Vector2(64, 68)
+
+[node name="Game" type="Node2D"]
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Floor" type="Sprite2D" parent="Environment"]
+self_modulate = Color(0.658824, 0.647059, 0.647059, 1)
+z_index = -2
+position = Vector2(386.5, 318.25)
+scale = Vector2(39.5156, 23.9141)
+texture = ExtResource("2_ufpbl")
+
+[node name="Blocks" type="Node" parent="Environment"]
+
+[node name="Block" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(73, 57)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block2" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(1064, 89)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block2/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block3" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(408, 186)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block3/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block4" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(821, 251)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block4/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block5" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(86, 567)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block5/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block6" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(1052, 569)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block6"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block6/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Block7" type="Sprite2D" parent="Environment/Blocks"]
+self_modulate = Color(0, 0, 0, 1)
+position = Vector2(608, 455)
+texture = ExtResource("2_ufpbl")
+metadata/_edit_group_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block7"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block7/StaticBody2D"]
+shape = SubResource("RectangleShape2D_xcpif")
+
+[node name="Player" parent="." instance=ExtResource("1_f2vpt")]
+position = Vector2(576, 324)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Zombie" parent="Enemies" instance=ExtResource("3_qgdn1")]
+
+[node name="Zombie2" parent="Enemies" instance=ExtResource("3_qgdn1")]
+position = Vector2(209, 521)
+
+[node name="Zombie3" parent="Enemies" instance=ExtResource("3_qgdn1")]
+position = Vector2(683, 211)
+
+[node name="Zombie4" parent="Enemies" instance=ExtResource("3_qgdn1")]
+position = Vector2(896, 631)
+
+[node name="Zombie5" parent="Enemies" instance=ExtResource("3_qgdn1")]
+position = Vector2(1154, 101)
+
+[node name="Zombie6" parent="Enemies" instance=ExtResource("3_qgdn1")]
+position = Vector2(611, 581)

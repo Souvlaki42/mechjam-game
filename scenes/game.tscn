@@ -1,120 +1,60 @@
-[gd_scene load_steps=5 format=3 uid="uid://xwpkxce3rcb"]
+[gd_scene load_steps=7 format=3 uid="uid://xwpkxce3rcb"]
 
 [ext_resource type="PackedScene" uid="uid://cd7hw6p8q4awu" path="res://scenes/player.tscn" id="1_f2vpt"]
-[ext_resource type="Texture2D" uid="uid://bl4qx5bohqcle" path="res://assets/white_sq.png" id="2_ufpbl"]
-[ext_resource type="PackedScene" uid="uid://8y8i7312ixnx" path="res://scenes/zombie.tscn" id="3_qgdn1"]
+[ext_resource type="Script" path="res://scripts/environment.gd" id="1_rx3jm"]
+[ext_resource type="Texture2D" uid="uid://cihqvjv1l4d3" path="res://assets/tiles.png" id="2_ab2u5"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_xcpif"]
-size = Vector2(64, 68)
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_r6020"]
+vertices = PackedVector2Array(32, 32, -32, 32, -32, -32, 32, -32)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+agent_radius = 0.0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bpm3x"]
+texture = ExtResource("2_ab2u5")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_r6020")
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_lk2oe"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+physics_layer_0/collision_mask = 3
+navigation_layer_0/layers = 1
+sources/0 = SubResource("TileSetAtlasSource_bpm3x")
 
 [node name="Game" type="Node2D"]
 
 [node name="Environment" type="Node2D" parent="."]
+script = ExtResource("1_rx3jm")
 
-[node name="Floor" type="Sprite2D" parent="Environment"]
-self_modulate = Color(0.658824, 0.647059, 0.647059, 1)
-z_index = -2
-position = Vector2(386.5, 318.25)
-scale = Vector2(39.5156, 23.9141)
-texture = ExtResource("2_ufpbl")
+[node name="TileMap" type="TileMap" parent="Environment"]
+tile_set = SubResource("TileSet_lk2oe")
+format = 2
 
-[node name="Blocks" type="Node" parent="Environment"]
+[node name="EnemyTimer" type="Timer" parent="Environment"]
+wait_time = 3.0
+autostart = true
 
-[node name="Block" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(73, 57)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
+[node name="Enemies" type="Node2D" parent="Environment"]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block"]
+[node name="CanvasLayer" type="CanvasLayer" parent="Environment"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
+[node name="Label" type="Label" parent="Environment/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Kills: 0"
 
-[node name="Block2" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(1064, 89)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
+[node name="Player" parent="." node_paths=PackedStringArray("kills_text") instance=ExtResource("1_f2vpt")]
+position = Vector2(576, 322)
+kills_text = NodePath("../Environment/CanvasLayer/Label")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block2/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Block3" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(408, 186)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block3"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block3/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Block4" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(821, 251)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block4/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Block5" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(86, 567)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block5"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block5/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Block6" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(1052, 569)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block6"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block6/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Block7" type="Sprite2D" parent="Environment/Blocks"]
-self_modulate = Color(0, 0, 0, 1)
-position = Vector2(608, 455)
-texture = ExtResource("2_ufpbl")
-metadata/_edit_group_ = true
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Environment/Blocks/Block7"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Blocks/Block7/StaticBody2D"]
-shape = SubResource("RectangleShape2D_xcpif")
-
-[node name="Player" parent="." instance=ExtResource("1_f2vpt")]
-position = Vector2(576, 324)
-
-[node name="Enemies" type="Node" parent="."]
-
-[node name="Zombie" parent="Enemies" instance=ExtResource("3_qgdn1")]
-
-[node name="Zombie2" parent="Enemies" instance=ExtResource("3_qgdn1")]
-position = Vector2(209, 521)
-
-[node name="Zombie3" parent="Enemies" instance=ExtResource("3_qgdn1")]
-position = Vector2(683, 211)
-
-[node name="Zombie4" parent="Enemies" instance=ExtResource("3_qgdn1")]
-position = Vector2(896, 631)
-
-[node name="Zombie5" parent="Enemies" instance=ExtResource("3_qgdn1")]
-position = Vector2(1154, 101)
-
-[node name="Zombie6" parent="Enemies" instance=ExtResource("3_qgdn1")]
-position = Vector2(611, 581)
+[connection signal="timeout" from="Environment/EnemyTimer" to="Environment" method="generate_enemy"]

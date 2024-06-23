@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @onready var ray_cast_2d = $RayCast2D
+@export var kills_text: Label
 @export var move_speed = 200
 
 var dead = false
+var kills = 0
 
 func _process(_delta):
 	if Input.is_action_just_pressed("exit"):
@@ -41,3 +43,5 @@ func shoot():
 	$ShootSound.play()
 	if ray_cast_2d.is_colliding() and ray_cast_2d.get_collider().has_method("kill"):
 		ray_cast_2d.get_collider().kill()
+		kills = kills + 1
+		kills_text.text = "Kills: " + str(kills)
